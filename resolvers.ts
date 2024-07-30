@@ -38,7 +38,19 @@ export const resolvers = {
       return category;
     }
   },
+  // Xứ lý logic các biến trong type Article
+  Article: {
+    category: async (article) => {
+      const categoryId = article.categoryId;
 
+      const category = await Category.findOne({
+        _id: categoryId,
+        deleted: false
+      });
+
+      return category;
+    }
+  },
   // Xử lý logic các hàm [POST, PATCH, DELETE, PUT]
   Mutation: {
     // Articel

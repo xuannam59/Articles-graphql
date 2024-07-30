@@ -6,7 +6,8 @@ export const typeDefs = gql`
     id: ID, # returns a ID
     title: String, # returns a String
     avatar: String,
-    description: String
+    description: String,
+    category: Category
   }
 
   type Category {
@@ -30,7 +31,8 @@ export const typeDefs = gql`
   input ArticleInput {
     title: String,
     avatar: String,
-    description: String
+    description: String,
+    categoryId: String
   }
 
   input CategoryInput {
