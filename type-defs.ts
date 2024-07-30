@@ -24,5 +24,7 @@ export const typeDefs = gql`
   # type Mutaiton chứa các câu lện để người dùng thêm, sửa, xoá ,... [POST, PATCH, DELETE, PUT]
   type Mutation {
     createArticle(article: ArticleInput): Article # return a Article
+    updateArticle(id: ID, article: ArticleInput):Article # return a Article
+    deleteArticle(id: ID): String # return a String
   }
 `

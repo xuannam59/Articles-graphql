@@ -31,6 +31,29 @@ export const resolvers = {
       await record.save();
 
       return record;
+    },
+    updateArticle: async (_, agrs) => {
+      const { id, article } = agrs;
+
+      await Article.updateOne({
+        _id: id,
+      }, article);
+      const record = await Article.findOne({
+        _id: id
+      });
+      return record;
+    },
+    deleteArticle: async (_, agrs) => {
+      const { id } = agrs;
+
+      await Article.updateOne({
+        _id: id
+      }, {
+        deleted: true,
+        deletedAt: new Date()
+      });
+
+      return "Đã xoá";
     }
   }
 }
