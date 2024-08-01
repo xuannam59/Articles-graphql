@@ -5,10 +5,46 @@ import Category from "../model/category.model";
 export const resolversArticle = {
   // Xứ lý logic các hàm [GET]
   Query: {
-    getlistArticle: async () => {
-      const articles = await Article.find({
+    getlistArticle: async (_, agrs) => {
+      const {
+        sortKey,
+        sortValue,
+        currentPage,
+        limitItem,
+        filterKey,
+        filterValue,
+        keyword
+      } = agrs
+
+      let find = {
         deleted: false
-      });
+      }
+
+      // Sort
+      const sort = {};
+      if (sortKey && sortValue) {
+        sort[sortKey] = sortValue;
+      }
+
+      // Pagination
+      const skip: number = (currentPage - 1) * limitItem;
+
+      // Filter 
+      if (filterKey && filterValue) {
+        find[filterKey] = filterValue;
+      }
+
+      // Search
+      if (keyword) {
+        const regexKey = new RegExp(keyword, "i");
+        find["title"] = regexKey;
+      }
+
+      const articles = await Article.find(find)
+        .sort(sort)
+        .skip(skip)
+        .limit(limitItem);
+
       return articles;
     },
     getArticle: async (_, agrs) => {

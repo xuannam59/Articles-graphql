@@ -13,7 +13,15 @@ export const typeDefsArticle = gql`
 
   # type Query chứa các câu lệnh để người dùng truy vấn dữ liệu [GET]
   type Query {
-    getlistArticle: [Article], # returns a array Article
+    getlistArticle(
+      sortKey: String,
+      sortValue:String,
+      currentPage: Int = 1,
+      limitItem: Int = 2,
+      filterKey: String,
+      filterValue: String,
+      keyword: String
+    ): [Article], # returns a array Article
     getArticle(id: ID): Article # returns a Article
   }
 
