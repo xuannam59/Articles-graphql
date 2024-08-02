@@ -5,6 +5,7 @@ import { ApolloServer } from "apollo-server-express";
 
 import { typeDefs } from "./typeDefs/index.typeDefs";
 import { resolvers } from "./resolver/index.resolver";
+import { requireAuth } from "./middlewares/auth.middleware";
 
 const startServer = async () => {
   dotenv.config();
@@ -13,10 +14,17 @@ const startServer = async () => {
 
   // Connect database
   database.connect();
+
   // Graphql
+  app.use("/graphql", requireAuth);
+
   const apolloServer = new ApolloServer({
     typeDefs: typeDefs,
-    resolvers: resolvers
+    resolvers: resolvers,
+    introspection: true,
+    context: ({ req }) => {
+      return { ...req }
+    }
   });
 
   await apolloServer.start();

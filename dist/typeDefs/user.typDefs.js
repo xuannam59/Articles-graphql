@@ -1,6 +1,8 @@
-import { gql } from "apollo-server-express";
-
-export const typeDefsUse = gql`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.typeDefsUse = void 0;
+const apollo_server_express_1 = require("apollo-server-express");
+exports.typeDefsUse = (0, apollo_server_express_1.gql) `
   type User {
     id: ID,
     fullName: String,
@@ -32,4 +34,4 @@ export const typeDefsUse = gql`
     registerUser(user: RegisterUserInput): User,
     loginUser(user: LoginUser ): User
   }
-`
+`;

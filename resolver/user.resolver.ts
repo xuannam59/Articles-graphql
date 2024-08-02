@@ -3,6 +3,31 @@ import User from "../model/user.model";
 import md5 from "md5";
 
 export const resolversUser = {
+  Query: {
+    getInfoUser: async (_, agrs, context) => {
+      const token = context["user"].token;
+
+      const infoUser = await User.findOne({
+        token: token,
+        deleted: false
+      });
+      if (!infoUser) {
+        return {
+          code: 400,
+          message: "Error!"
+        }
+      }
+
+      return {
+        code: 200,
+        message: "Success!",
+        fullName: infoUser.fullName,
+        avatar: infoUser.avatar,
+        email: infoUser.email,
+        phone: infoUser.phone
+      }
+    },
+  },
 
   Mutation: {
     registerUser: async (_, agrs) => {
